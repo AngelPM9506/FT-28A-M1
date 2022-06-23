@@ -43,8 +43,9 @@ function cacheFunction(cb) {
   squareCache(5)    // no volverá a invocar a square, simplemente buscará en la caché cuál es el resultado de square(5) y lo retornará (tip: si usaste un objeto, podés usar hasOwnProperty) 
 
   */
+  /*
   var eventos = {};
-  /*return function (valor) {
+  return function (valor) {
     if (!eventos.hasOwnProperty(valor)) {
       let resultado = cb(valor);
       eventos[valor] = resultado;
@@ -54,12 +55,13 @@ function cacheFunction(cb) {
       return resultado;
     }
   }*/
-  return valor => {
-    if (!eventos.hasOwnProperty(valor)) {
-      eventos[valor] = cb(valor);
-      return eventos[valor];
+  var memory = {};
+  return arg => {
+    if (!memory.hasOwnProperty(arg)) {
+      memory[arg] = cb(arg);
+      return memory[arg];
     }
-      return eventos[valor];
+      return memory[arg];
   }
 }
 
