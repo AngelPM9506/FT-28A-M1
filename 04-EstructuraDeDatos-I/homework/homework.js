@@ -15,13 +15,14 @@ Como ejercicio adicional y completamente opcional, al terminar de resolver este 
 */
 
 function nFactorial(n) {
-  var f;
-  if (n === 0) {
+  if (n < 0) {
+    return 'Valores negativos no damitidos';
+  }
+  if (n <= 1) {
     return 1;
   } else {
-    f = n * nFactorial(n - 1);
+    return n * nFactorial(n - 1);
   }
-  return f;
 }
 
 function nFibonacci(n) {
@@ -43,7 +44,7 @@ Pueden utilizar class o función constructora.
 
 class Queue {
   constructor() {
-    this.queue = []
+    this.queue = [];
   }
   enqueue(val) {
     this.queue.push(val);
