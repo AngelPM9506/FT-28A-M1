@@ -10,10 +10,82 @@ Implementar la clase LinkedList, definiendo los siguientes métodos:
   search(isEven), donde isEven es una función que retorna true cuando recibe por parámetro un número par, busca un nodo cuyo valor sea un número par.
   En caso de que la búsqueda no arroje resultados, search debe retornar null.
 */
-
-function LinkedList() {}
-
-function Node(value) {}
+/**Clase de lista */
+class LinkedList {
+  constructor() {
+    this.long = 0;
+    this.head = null;
+  }
+  /**agregando un nuevo nodo */
+  add(val) {
+    const newnode = new Node(val);
+    if (!this.head) {
+      this.head = newnode;
+    } else {
+      let curr = this.head;
+      while (curr.next) {
+        curr = curr.next;
+      }
+      curr.next = newnode;
+    }
+    this.long++
+  }
+  /**Buscando nodo */
+  search(val) {
+    if (!this.head) { return 'lista vacia'; }
+    var curr = this.head;
+    var confi = false;
+    if (curr.value == val) { confi = true; }
+    if (typeof (val) === 'function') {
+      while (!confi && curr.next !== null) {
+        if (val(curr.value)) {
+          confi = true;
+          return curr.value;
+        }
+        curr = curr.next;
+        if (val(curr.value)) { confi = true; }
+      }
+    };
+    while (!confi && curr.next !== null) {
+      curr = curr.next;
+      if (curr.value == val) {
+        confi = true;
+      }
+    }
+    if (confi) {
+      return curr.value;
+    } else {
+      return null;
+    }
+  }
+  /**Eliminando nodo */
+  remove() {
+    var lasCurr;
+    if (!this.head) {
+      lasCurr = null;
+    } else {
+      let curr = this.head;
+      if (curr.next === null) {
+        lasCurr = curr.value;
+        this.head = null;
+        this.long--;
+      } else {
+        while (curr.next.next !== null) {
+          curr = curr.next
+        }
+        lasCurr = curr.next.value;
+        curr.next = null;
+        this.long--;
+      }
+    }
+    return lasCurr;
+  }
+}
+/**Clase nodo */
+function Node(valor) {
+  this.value = valor;
+  this.next = null;
+}
 
 /*
 Implementar la clase HashTable.
@@ -30,8 +102,42 @@ La clase debe tener los siguientes métodos:
 Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero puedo chequear, con hasKey, si ya hay algo en la tabla con el nombre 'instructora'; luego, invocando set('instructora', 'Ani'), se almacenará el par clave-valor en un bucket específico (determinado al hashear la clave)
 */
 
-function HashTable() {}
-
+function HashTable() {
+  this.numBuckets = 35;
+}
+HashTable.prototype.hash = function (value) {
+  var sumatoria = 0;
+  for (let i = 0; i < value.length; i++) {
+    sumatoria += value.charCodeAt(i);
+  }
+  return sumatoria % this.numBuckets;
+}
+HashTable.prototype.set = function (key, value) {
+  if (typeof (key) === 'string') {
+    let hashedKey = this.hash(key);
+    if (this[hashedKey] === undefined) {
+      this[hashedKey] = [];
+    }
+    this[hashedKey][key] = value;
+    return this[hashedKey][key];
+  } else {
+    throw new TypeError('Keys must be strings')
+  }
+}
+HashTable.prototype.get = function (key) {
+  let hashedKey = this.hash(key);
+  return this[hashedKey][key];
+}
+HashTable.prototype.hasKey = function (key) {
+  let hashedKey = this.hash(key);
+  console.log(this[hashedKey]);
+  if (this[hashedKey] !== undefined) {
+    if (this[hashedKey][key] !== undefined) {
+      return true;
+    }
+  }
+  return false;
+}
 // No modifiquen nada debajo de esta linea
 // --------------------------------
 
