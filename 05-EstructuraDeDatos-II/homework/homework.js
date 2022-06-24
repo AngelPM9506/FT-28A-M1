@@ -37,16 +37,13 @@ class LinkedList {
     var confi = false;
     if (curr.value == val) { confi = true; }
     if (typeof (val) === 'function') {
-      while (!confi && curr.next !== null) {
-        if (val(curr.value)) {
-          confi = true;
-          return curr.value;
-        }
+      if (val(curr.value)) { confi = true; }
+      while (!confi && curr.next) {
         curr = curr.next;
         if (val(curr.value)) { confi = true; }
       }
     };
-    while (!confi && curr.next !== null) {
+    while (!confi && curr.next) {
       curr = curr.next;
       if (curr.value == val) {
         confi = true;
