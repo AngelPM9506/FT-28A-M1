@@ -18,64 +18,47 @@ Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero
 function HashTable() {
     this.numBuckets = 35;
 }
+
+
 HashTable.prototype.hash = function (value) {
     var sumatoria = 0;
     for (let i = 0; i < value.length; i++) {
-        sumatoria+= value.charCodeAt(i);
+        sumatoria += value.charCodeAt(i);
     }
     return sumatoria % this.numBuckets;
 }
+
 HashTable.prototype.set = function (key, value) {
-    if (typeof(key) === 'string') {
+    if (typeof (key) === 'string') {
         let hashedKey = this.hash(key);
-        if (this[hashedKey]=== undefined) {
-            this[hashedKey]=[];
+        if (this[hashedKey] === undefined) {
+            this[hashedKey] = [];
         }
         this[hashedKey][key] = value;
         return this[hashedKey][key];
     } else {
-        throw new TypeError('Keys must be strings')
+        throw new TypeError('Keys must be strings');
     }
 }
 HashTable.prototype.get = function (key) {
     let hashedKey = this.hash(key);
-    console.log(this[hashedKey][key]);
     return this[hashedKey][key];
 }
 HashTable.prototype.hasKey = function (key) {
-    let hashedKey = this.hash(key);
-    console.log(this[hashedKey]);
+    var hashedKey = this.hash(key);
     if (this[hashedKey] !== undefined) {
         if (this[hashedKey][key] !== undefined) {
-            return true;
+            return true
         }
     }
     return false;
 }
 
+
+
 var hashTable = new HashTable()
-console.log(hashTable);
-console.log(hashTable.hash('foo'));
-console.log(hashTable.hash('this is a key'));
-console.log(hashTable.hash('what about this one'));
-
-console.log(hashTable.set('false', 'Hola mundo'));
-console.log(hashTable.set('foo', 'bar1'));
-console.log(hashTable.set('ofo', 'bar2'));
-console.log(hashTable.set('oof', 'bar3'));
-console.log(hashTable.set('oof', 'bar4'));
-console.log(hashTable.get('foo'));
-console.log(hashTable.get('ofo'));
-console.log(hashTable.get('oof'));
-//console.log(hashTable.set(false, 'Hola mundo'));
-console.log(hashTable.get('false'));
-console.log(hashTable.hasKey('Hola mundo'));
-
-console.log(hashTable.set('foobar', 'fluf cats'));
-console.log(hashTable.hasKey('foobar'));
-console.log(hashTable.hasKey('raboof'));
-
-console.log(hashTable.hash('foobar'))
-console.log(hashTable.hash('raboof'))
-
+console.log(hashTable.hash('hola'));
+hashTable.set('hola', 'Hola Mundo');
+hashTable.set('olha', 'Hola Marte');
+console.log(hashTable.get('hola'));
 console.log(hashTable);

@@ -127,7 +127,6 @@ HashTable.prototype.get = function (key) {
 }
 HashTable.prototype.hasKey = function (key) {
   let hashedKey = this.hash(key);
-  console.log(this[hashedKey]);
   if (this[hashedKey] !== undefined) {
     if (this[hashedKey][key] !== undefined) {
       return true;

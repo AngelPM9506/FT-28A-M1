@@ -1,4 +1,5 @@
 const { log } = require("console");
+const { lstat } = require("fs");
 const { isFunction } = require("util");
 
 /*
@@ -13,126 +14,94 @@ Implementar la clase LinkedList, definiendo los siguientes métodos:
 */
 /**Clase de lista */
 
-class LinkedList {
-    constructor() {
-        this._elementos = 0;
-        this.head = null;
-    }
-    /**agregando un nuevo nodo */
-    add(val) {
-        const newnode = new Node(val);
-        if (!this.head) {
-            this.head = newnode;
-        } else {
-            let curr = this.head;
-            while (curr.next) {
-                curr = curr.next;
-            }
-            curr.next = newnode;
+function LinkedList() {
+    this.head = null;
+    this._elementos = 0;
+}
+
+function Node(value) {
+    this.value = value;
+    this.next = null;
+}
+
+LinkedList.prototype.add = function (value) {
+    var newNode = new Node(value);
+    if (this.head === null) {
+        this.head = newNode;
+    } else {
+        var current = this.head
+        while (current.next) {
+            current = current.next;
         }
+        current.next = newNode;
         this._elementos++
-        return newnode.value;
     }
-    search(val) {
-        if (!this.head) { return 'lista vacia'; }
-        var confi = false;
-        var curr = this.head;
-        if (curr.value === val) { confi = true; }
-        if (typeof(val) === 'function') {
-            if (val(curr.value)) { confi = true; }
-            while (!confi && curr.next) {
-                curr = curr.next;
-                console.log(curr.value.name);
-                if (val(curr.value)) {
-                    confi = true;
-                    console.log(curr.value.name);
-                    console.log(confi);
-                }
+    return current;
+}
+
+LinkedList.prototype.remove = function () {
+    var lastValue;
+    if (!this.head) {
+        lastValue = null;
+    } else {
+        var current = this.head;
+        if (current.next === null) {
+            lastValue = current;
+            this.head = null;
+        } else {
+            while (current.next.next) {
+                current = current.next;
             }
-        };
-        while (!confi && curr.next !== null) {
+            lastValue = current.next;
+            current.next = null;
+            this._elementos--
+        }
+    }
+    return lastValue;
+}
+
+LinkedList.prototype.search = function (val) {
+    if (!this.head) { return 'lista vacia'; }
+    var confi = false;
+    var curr = this.head;
+    if (curr.value === val) { confi = true; }
+    if (typeof (val) === 'function') {
+        if (val(curr.value)) { confi = true; }
+        while (!confi && curr.next) {
             curr = curr.next;
-            console.log(curr.value);
-            if (curr.value == val) {
+            console.log(curr.value.name);
+            if (val(curr.value)) {
                 confi = true;
+                console.log(curr.value.name);
+                console.log(confi);
             }
         }
-
+    };
+    while (!confi && curr.next !== null) {
+        curr = curr.next;
         console.log(curr.value);
-        if (confi) {
-            console.log(curr.value);
-            return curr.value;
-        } else {
-            return null;
+        if (curr.value == val) {
+            confi = true;
         }
     }
-    remove() {
-        var lasCurr;
-        if (!this.head) {
-            lasCurr = null;
-        } else {
-            let curr = this.head;
-            if (curr.next === null) {
-                console.log(curr);
-                lasCurr = curr.value;
-                this.head = null;
-                this._elementos--;
-            } else {
-                while (curr.next.next !== null) {
-                    curr = curr.next
-                }
-                lasCurr = curr.next.value;
-                console.log(curr.value);
-                curr.next = null;
-                this._elementos--;
-            }
-        }
-        console.log(lasCurr);
-        return lasCurr;
+
+    console.log(curr.value);
+    if (confi) {
+        console.log(curr.value);
+        return curr.value;
+    } else {
+        return null;
     }
 }
 
-class Node {
-    constructor(val) {
-        this.value = val;
-        this.next = null;
-    }
-}
 /**ejecución */
 const lista1 = new LinkedList();
-/*lista1.add('prueba de add 1');
-lista1.add('prueba de add 2');
-lista1.add('prueba de add 3');
-lista1.remove();
-lista1.remove();
 
-lista1.add('one')
-lista1.add('two')
-
-console.log(lista1.search(function(nodeValue) {
-    return nodeValue === 'two';
-  }));*/
-
-function UserNode(name, email, city) {
-    this.name = name;
-    this.email = email;
-    this.city = city;
+for (let i = 1; i <= 5; i++) {
+    lista1.add(i);
 }
 
-lista1.add(new UserNode('Nimit', 'nimit@fs.com', 'New York'))
-lista1.add(new UserNode('David', 'david@fs.com', 'New York'))
-lista1.add(new UserNode('Paul', 'paul@yc.com', 'Mountain View'))
-
-console.log(lista1.search(function (userNode) {
-    return userNode.name === 'Nimit';
-}).email);
-console.log(lista1.search(function (userNode) {
-    return userNode.email === 'david@fs.com';
-}).city);
-console.log(lista1.search(function (userNode) {
-    return userNode.city === 'Mountain View';
-}).name);
-
-//console.log(lista1.search('prueba de add 1'));
-
+console.log(lista1.search(5));
+console.log(lista1.remove());
+console.log(lista1.search(5));
 console.log(lista1);
