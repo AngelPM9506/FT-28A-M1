@@ -28,9 +28,9 @@ function bubbleSort(array) {
   // Devolver el array ordenado resultante
   // Tu código:
   var arrOrder = array;
-  var inOrder = false;
-  while (!inOrder) {
-    inOrder = true;
+  var inOrder = true;
+  while (inOrder) {
+    inOrder = false;
     for (let i = 0; i < arrOrder.length; i++) {
       if (arrOrder[i] > arrOrder[i + 1]) {
         /**si la posicion actual es mayor que la actual se intercambian*/
@@ -38,7 +38,7 @@ function bubbleSort(array) {
         arrOrder[i] = arrOrder[i + 1];
         arrOrder[i + 1] = actual;
         /**termina ordenamiento e indicamos que no estaba en orden*/
-        inOrder = false;
+        inOrder = true;
       }
     }
   }
@@ -51,23 +51,23 @@ function insertionSort(array) {
   // el array recibido como parámetro utilizando arreglos
   // Devolver el array ordenado resultante
   // Tu código:
-    var arrayInOrder = array;
-    for (let i = 1; i < arrayInOrder.length; i++) {
-        /**primero seleccionar el elemento en el primer index */
-        let actual = arrayInOrder[i], j;
-        for (j = i - 1; j >= 0 && arrayInOrder[j] > actual; j--) {
-            /**
-             * simpre que arrayInOrder[j] que el actual
-             * se movera arrayInOrder[j] a laderecha a la posicion arrayInOrder[j + 1]
-             */
-            arrayInOrder[j + 1] = arrayInOrder[j];
-        }
-        /**
-         * se coloca el elemento alcual en el indice 0 y junto al emeneto mas pequelo
-         */
-        arrayInOrder[j + 1] = actual;
+  var arrayInOrder = array;
+  for (let i = 1; i < arrayInOrder.length; i++) {
+    /**primero seleccionar el elemento en el primer index */
+    let actual = arrayInOrder[i], j;
+    for (j = i - 1; j >= 0 && arrayInOrder[j] > actual; j--) {
+      /**
+       * simpre que arrayInOrder[j] que el actual
+       * se movera arrayInOrder[j] a laderecha a la posicion arrayInOrder[j + 1]
+       */
+      arrayInOrder[j + 1] = arrayInOrder[j];
     }
-    return arrayInOrder;
+    /**
+     * se coloca el elemento alcual en el indice 0 y junto al eleneto mas pequeño
+     */
+    arrayInOrder[j + 1] = actual;
+  }
+  return arrayInOrder;
 }
 
 
@@ -76,31 +76,31 @@ function selectionSort(array) {
   // el array recibido como parámetro utilizando dos arreglos
   // Devolver el array ordenado resultante
   // Tu código:
-    /**
-     * No utiliza el valor en la posición como los anteriores, utiliza la posición 
-     * Este método utiliza aparte del array original un sub array */
-    var arrayInOrder = array;
-    for (let i = 0; i < arrayInOrder.length; i++) {
-        /** Ee alimenta el subarray tomando el primer elemento como el mínimo*/
-        let min = i;
-        for (let j = i + 1; j < arrayInOrder.length; j++) {
-            /** Una vez que tenemos el primer elemento buscamos en el resto de la cadena 
-             * Si hay un elemento aún más pequeño para tomarlo como valor mínimo
-            */
-            if (arrayInOrder[j] < arrayInOrder[min]) {
-                /** Si se encuenta un valor aún más pequeñoo se reemplaza */
-                min = j
-            }
-        }
-        /**Comprobamos si hay cambios en el valor mínimo */
-        if (min !== i) {
-            /**Si es diferente de i (valor mínimo) se intercambian elementos por posición*/
-            let temp = arrayInOrder[i];
-            arrayInOrder[i] = arrayInOrder[min];
-            arrayInOrder[min] = temp;
-        }
+  /**
+   * No utiliza el valor en la posición como los anteriores, utiliza la posición 
+   * Este método utiliza aparte del array original un sub array */
+  var arrayInOrder = array;
+  for (let i = 0; i < arrayInOrder.length; i++) {
+    /** Ee alimenta el subarray tomando el primer elemento como el mínimo*/
+    let min = i;
+    for (let j = i + 1; j < arrayInOrder.length; j++) {
+      /** Una vez que tenemos el primer elemento buscamos en el resto de la cadena 
+       * Si hay un elemento aún más pequeño para tomarlo como valor mínimo
+      */
+      if (arrayInOrder[j] < arrayInOrder[min]) {
+        /** Si se encuenta un valor aún más pequeñoo se reemplaza */
+        min = j
+      }
     }
-    return arrayInOrder;
+    /**Comprobamos si hay cambios en el valor mínimo */
+    if (min !== i) {
+      /**Si es diferente de i (valor mínimo) se intercambian elementos por posición*/
+      let temp = arrayInOrder[i];
+      arrayInOrder[i] = arrayInOrder[min];
+      arrayInOrder[min] = temp;
+    }
+  }
+  return arrayInOrder;
 }
 
 

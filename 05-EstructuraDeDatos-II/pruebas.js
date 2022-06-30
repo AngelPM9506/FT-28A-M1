@@ -103,5 +103,5 @@ for (let i = 1; i <= 5; i++) {
 
 console.log(lista1.search(5));
 console.log(lista1.remove());
-console.log(lista1.search(5));
+console.log(lista1.search(3));
 console.log(lista1);
