@@ -17,7 +17,6 @@ class BinarySearchTree {
     this.right = null;
     this.left = null;
   }
-  /**insertar nuevos arboles */
   insert(val) {
     /** Nueva instancia de arbol */
     var newTree = new BinarySearchTree(val);
@@ -158,18 +157,18 @@ class BinarySearchTree {
      * de izquierda a derecha 
      * analofia de pincipio a fin por capa
      */
-      var node = this;
-      console.log(node.value);
-      if (node.left) {
-          arr.push(node.left);
-      }
-      if (node.right) {
-          arr.push(node.right);
-      }
-      val(node.value);
-      if (arr.length > 0) {
-          arr.shift().breadthFirstForEach(val,arr);
-      }
+    var node = this;
+    console.log(node.value);
+    if (node.left) {
+      arr.push(node.left);
+    }
+    if (node.right) {
+      arr.push(node.right);
+    }
+    val(node.value);
+    if (arr.length > 0) {
+      arr.shift().breadthFirstForEach(val, arr);
+    }
   }
 
 }

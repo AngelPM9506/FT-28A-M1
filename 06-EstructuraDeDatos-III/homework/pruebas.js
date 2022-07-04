@@ -62,6 +62,31 @@ class BinarySearchTree {
         }
         return 1 + node.left.size() + node.right.size();
     }
+    /**insertar nuevos arboles */
+    altura() {
+      /**primero saber ya estamos parados en el ultima secccion o solo tenemos un nodo */
+      var node = this;
+      if (!node.right && !node.left) {
+        return 0;
+      } else {
+        /** si no tenemos algo a la derecha aplicamos de nuevo este metodo a la izquierda*/
+        if (!node.right) {
+          return node.left.altura() + 1;
+        }
+        /**si no tenemos nada a la izquierda aplicamos este mismo metodo a la derecha*/
+         else if (!node.left) {
+          return node.right.altura() + 1;
+        }
+  
+        /**
+         * si se tiene algo en ambos puntos se aplicara de nuevo este metodo a ambos lados
+         * y se retornara el valor maximo lo cual nos dira cuantos niveles tiene el arvol
+         */
+        else {
+          return Math.max(node.left.altura() + 1, node.right.altura() + 1);
+        }
+      }
+    }
     /**busqueda de arboles*/
     contains(val) {
         var node = this;
@@ -143,6 +168,15 @@ class BinarySearchTree {
     }
 
 }
+var nuevoArbol = new BinarySearchTree(5);
+console.log(nuevoArbol);
+
+for (let i = 0; i < 100; i++) {
+    nuevoArbol.insert(Math.round(Math.random() *(Math.E *  6.63) * Math.PI - i))
+}
+console.log(nuevoArbol.altura());
+console.log(nuevoArbol);
+
 const arryPrueba = [15, 25, 5, 17, 21, 28, 0, 14, 50, 1, 45, 13, 12, 11, 30, 35, 33, 31, 34];
 var arrySalida = [];
 var NAB = new BinarySearchTree(20);
